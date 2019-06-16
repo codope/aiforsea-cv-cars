@@ -8,6 +8,7 @@ This repository is to do car recognition by transfer learning, fine-tuning ResNe
 - Trained and tested with ResNet50, Resnet101, ResNet152.
 - Ceteris paribus, a model with denser networks performed better. But, there is a trade-off between resources and accuracy. So, the goal of this project is to arrive at a reasonable model (say > 90% accuracy) within a reasonable aount of training time. Given more time and resources, we could definitely fine-tune more to improve accuracy.
 - With this goal in mind, I could come with 90.8% accuracy on validation set and 91.4% on test set by fine-tuning ResNet101. Specifically, I used a differential learning rate between `slice()` over 40 epochs.
+![image](images/cars_result.jpg)
 - Recent state-of-the-art results on the Stanford Cars-196 data set published so far:  
 
 
@@ -17,12 +18,25 @@ This repository is to do car recognition by transfer learning, fine-tuning ResNe
 - [PyTorch](https://pytorch.org/get-started/locally/)
 - [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation)
 - [OpenCV](https://opencv-python-tutroals.readthedocs.io/en/latest/)
-- Development platform:
+
+## Development platform:
  
- Google Deep Learning VM based on: Debian GNU/Linux 9.9 (stretch) (GNU/Linux 4.9.0-9-amd64 x86_64\n)
- Python 3.7
- 
- - GPU:
+- Google Deep Learning VM based on: Debian GNU/Linux 9.9 (stretch) (GNU/Linux 4.9.0-9-amd64 x86_64\n)
+- Machine Type: n1-highmem-8 (8 vCPUs, 52 GB memory)
+- Python 3.7, PyTorch 1.1, Fastai 1.0.52
+ ```bash
+$ python
+Python 3.7.0 (default, Oct  9 2018, 10:31:47)
+[GCC 7.3.0] :: Anaconda, Inc. on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import torch
+>>> torch.__version__
+'1.1.0'
+>>> import fastai
+>>> fastai.__version__
+'1.0.52'
+``` 
+- GPU: NVIDIA Tesla P4
 ```bash
 $ nvidia-smi
 Sat Jun 15 06:42:17 2019
@@ -44,11 +58,11 @@ Sat Jun 15 06:42:17 2019
 +-----------------------------------------------------------------------------+
 ```
 
-## Dataset
+## Usage
 
-We use the Cars Dataset, which contains 16,185 images of 196 classes of cars. The data is split into 8,144 training images and 8,041 testing images, where each class has been split roughly in a 50-50 split.
+As mentioned by the challnege, the project uses the [Cars Dataset](https://ai.stanford.edu/~jkrause/cars/car_dataset.html), which contains 16,185 images of 196 classes of cars. The data is split into 8,144 training images and 8,041 testing images, where each class has been split roughly in a 50-50 split.
 
-You can get it from [Cars Dataset](https://ai.stanford.edu/~jkrause/cars/car_dataset.html):
+You can get it from :
 
 ```bash
 $ cd aiforsea-cv-cars
