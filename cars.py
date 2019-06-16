@@ -41,12 +41,13 @@ async def classify_url(request):
 
 def predict_image_from_bytes(bytes):
     img = open_image(BytesIO(bytes))
-    pred_class, pred_idx, outputs = car_learner.predict(img)
+    pred_class, pred_idx, confidence = car_learner.predict(img)
     cars_meta = scipy.io.loadmat('devkit/cars_meta')
     class_names = cars_meta['class_names']  # shape=(1, 196)
     class_names = np.transpose(class_names)
     return JSONResponse({
-        "prediction_class": class_names[pred_idx.item()][0][0]
+        "prediction_class": class_names[pred_idx.item()][0][0],
+        "confidence": confidence[pred_idx.item()].item()
     })
 
 

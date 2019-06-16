@@ -13,7 +13,6 @@ RUN pip install starlette uvicorn python-multipart aiohttp
 
 ADD cars.py cars.py
 ADD export-rn101_train_stage2-50e.pkl export-rn101_train_stage2-50e.pkl
-ADD cars_test_annos_withlabels.mat cars_test_annos_withlabels.mat
 ADD devkit devkit/
 
 # Run it once to trigger resnet download
