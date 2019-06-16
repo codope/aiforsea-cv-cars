@@ -7,6 +7,7 @@ import tarfile
 
 import cv2 as cv
 import numpy as np
+import pandas as pd
 import scipy.io
 
 
@@ -127,6 +128,14 @@ def process_test_data():
         fnames.append(fname)
 
     save_test_data(fnames, bboxes)
+    cars_annos_with_labels = scipy.io.loadmat('cars_test_annos_withlabels')
+    x = []
+    for i in range(8041):
+        x.append(np.transpose(np.array(cars_annos_with_labels['annotations']['fname']))[i][0][0])
+
+    df = pd.DataFrame(data=np.transpose(np.array(cars_annos_with_labels['annotations']['class'], dtype=np.int)),
+                      index=x)
+    df.to_csv('data/test_labels.csv')
     print('Testing data saved.')
 
 

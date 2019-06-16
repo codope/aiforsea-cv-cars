@@ -17,7 +17,12 @@ This repository is to do car recognition by transfer learning, fine-tuning ResNe
 - [PyTorch](https://pytorch.org/get-started/locally/)
 - [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation)
 - [OpenCV](https://opencv-python-tutroals.readthedocs.io/en/latest/)
-- Environment:
+- Development platform:
+ 
+ Google Deep Learning VM based on: Debian GNU/Linux 9.9 (stretch) (GNU/Linux 4.9.0-9-amd64 x86_64\n)
+ Python 3.7
+ 
+ - GPU:
 ```bash
 $ nvidia-smi
 Sat Jun 15 06:42:17 2019
