@@ -133,14 +133,17 @@ if __name__ == '__main__':
     test_file = 'test_labels.csv'
     test_annos_file = 'cars_test_annos_withlabels'
     learner = get_learner(model_path, model_file, test_path, test_file)
-    acc = get_accuracy(learner, test_annos_file)
-    print('The accuracy is {0}.'.format(acc))
-    if 'with-confidence' in sys.argv:
-        write_prediction_with_score(sys.argv[1], learner, 'data/test', 8041, get_class_names())
-    else:
-        write_prediction(sys.argv[0], learner, 'data/test', 8041)
-
     if 'predict-one' in sys.argv:
-        pred_class, pred_idx, confidence = predict_one_image(learner, sys.argv[1], get_class_names())
+        class_id, class_name, confidence = predict_one_image(learner, sys.argv[2], get_class_names())
+        print('{}, {}, {}\n'.format(class_id, class_name, confidence))
+        sys.exit()
+
+    if 'with-accuracy' in sys.argv:
+        acc = get_accuracy(learner, sys.argv[2])
+        print('The accuracy is {0}%'.format(acc))
+        sys.exit()
+
+    if 'with-confidence' in sys.argv:
+        write_prediction_with_score(sys.argv[2], learner, 'data/test', 8041, get_class_names())
     else:
-        write_prediction(sys.argv[0], learner, 'data/test', 8041)
+        write_prediction(sys.argv[1], learner, 'data/test', 8041)

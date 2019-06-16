@@ -12,11 +12,24 @@ import scipy.io
 
 
 def ensure_folder(folder):
+    """
+    Check whether folder exists or not. If not, then create folder.
+    :param folder:
+    :return:
+    """
     if not os.path.exists(folder):
         os.makedirs(folder)
 
 
 def save_train_data(fnames, labels, bboxes):
+    """
+    Save train data, as provided by https://ai.stanford.edu/~jkrause/cars/car_dataset.html
+
+    :param fnames: File names
+    :param labels: Labels
+    :param bboxes: Bounding boxes
+    :return:
+    """
     src_folder = 'cars_train'
     num_samples = len(fnames)
 
@@ -55,6 +68,13 @@ def save_train_data(fnames, labels, bboxes):
 
 
 def save_test_data(fnames, bboxes):
+    """
+    Save test data, as provided by https://ai.stanford.edu/~jkrause/cars/car_dataset.html
+
+    :param fnames: File names
+    :param bboxes: Bounding boxes
+    :return:
+    """
     src_folder = 'cars_test'
     dst_folder = 'data/test'
     num_samples = len(fnames)
