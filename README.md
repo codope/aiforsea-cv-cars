@@ -55,7 +55,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> fastai.__version__
 '1.0.52'
 ``` 
-- GPU: NVIDIA Tesla P4
+- GPU: NVIDIA Tesla P4, CUDA version 10.0
 ```bash
 $ nvidia-smi
 Sat Jun 15 06:42:17 2019
@@ -87,7 +87,7 @@ To setup and run the project follow the steps below.
 
 #### Prerequisites
 
-- Any standard Linux distribution. I used Debian GNU/Linux 9.9 (stretch). But, Ubuntu 16.04 or 18.04 should be fine too. Note that, [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation), that is being used in this project, **currently supports Linux only**, and requires PyTorch v1 and Python 3.6 or later.
+- Any last stable standard Linux distribution. Below steps have been tested on Debian GNU/Linux 9.9 (stretch). But, Ubuntu 16.04 or 18.04 should be fine too. Note that, [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation), that is being used in this project, **currently supports Linux only**, and requires PyTorch v1 and Python 3.6 or later. Moreover, CUDA support on macOS is only available by building PyTorch from source and I have not tested that. So, it is recommended that Linux is used.
 - Install [PyTorch](https://pytorch.org/get-started/locally/) and [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation) latest stable version as mentioned in [Development platform](#development-platform) section above.
 
 #### Steps
@@ -162,19 +162,22 @@ $ python inference.py with-confidence result_score.txt
 avg fps: 55.15086955505329
 
 $ ls -l /home/jupyter/aiforsea-cv-cars/*.txt
--rw-r--r-- 1 jupyter jupyter    417172 Jun 16 11:05 result_score.txt
+-rw-r--r-- 1 jupyter jupyter       172 Jun 16 10:47 /home/jupyter/aiforsea-cv-cars/requirements.txt
+-rw-r--r-- 1 jupyter jupyter    417172 Jun 16 11:05 /home/jupyter/aiforsea-cv-cars/result_score.txt
 ```
+For your reference, you can find [result_score.txt](result_score.txt) in the repo.
 - This one shows the usage without any `OPTION`.
 ```bash
 $ python inference.py result.txt
 avg fps: 55.26469256130214
 
 $ ls -l /home/jupyter/aiforsea-cv-cars/*.txt
--rw-r--r-- 1 jupyter jupyter     27774 Jun 16 11:08 result.txt
--rw-r--r-- 1 jupyter jupyter    417172 Jun 16 11:05 result_score.txt
+-rw-r--r-- 1 jupyter jupyter       172 Jun 16 10:47 /home/jupyter/aiforsea-cv-cars/requirements.txt
+-rw-r--r-- 1 jupyter jupyter     27774 Jun 16 11:08 /home/jupyter/aiforsea-cv-cars/result.txt
+-rw-r--r-- 1 jupyter jupyter    417172 Jun 16 11:05 /home/jupyter/aiforsea-cv-cars/result_score.txt
 ```
 
-For your reference, you can find [result.txt](https://github.com/codope/aiforsea-cv-cars/blob/master/result.txt) in the repo.
+For your reference, you can find [result.txt](result.txt) in the repo.
 
 #### Setup docker
 - First [install docker](https://docs.docker.com/install/overview/) if you don't have it already. 
