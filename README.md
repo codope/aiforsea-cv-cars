@@ -20,9 +20,11 @@ Table of contents
 <!--te-->
 ## Summary
 
-- Trained and tested with ResNet50, Resnet101, ResNet152. Different notebooks can be found in `experiments` folder.
-- Ceteris paribus, a model with denser networks performed better. But, there is a trade-off between resources and accuracy. So, the goal of this project is to arrive at a good model (say > 90% accuracy) within a reasonable amount of training time. Given more time and resources, we could definitely experiment and fine-tune more to improve accuracy.
-- With this goal in mind, I could come up with 91.4% accuracy on test set by fine-tuning ResNet101. Specifically, I used a differential learning rate between `slice(1e-4,1e-3)` over 40 epochs, with a momentum of `Point(0.95, 0.85)`. The process of training and intuition behind tuning cuold be found in [cv-stanford-cars.ipynb](https://github.com/codope/aiforsea-cv-cars/blob/master/cv-stanford-cars.ipynb) notebook. To learn about how to run and test, jump to Usage section below.
+- Trained and tested with ResNet50, Resnet101, ResNet152. Different notebooks can be found in `experiments` folder. However, the solution that I intend to submit is in [cv-stanford-cars.ipynb](https://github.com/codope/aiforsea-cv-cars/blob/master/cv-stanford-cars.ipynb) notebook.
+- Ceteris paribus, a model with denser networks performed better. But, there is a trade-off between resources and accuracy. So, the goal of this project was to arrive at a good model (say > 90% accuracy, without overfitting) within a faster training time. Given more time and resources, we could definitely experiment and fine-tune more to improve accuracy.
+- With this goal in mind, I could come up with **90.7% on validation set and 91.4% on test set** by fine-tuning ResNet101. Specifically, I used a differential learning rate between `slice(1e-4,1e-3)` over 40 epochs, with a momentum of `Point(0.95, 0.85)`. The process of training and intuition behind tuning could be found in [cv-stanford-cars.ipynb](https://github.com/codope/aiforsea-cv-cars/blob/master/cv-stanford-cars.ipynb) notebook. With ResNet152, I was able to get to 91.8% accuracy with [mixup](https://arxiv.org/abs/1710.09412) but the model was overfitting. 
+
+To learn about how to run and test, jump to [Usage](#usage) section below. Here's a screenshot of my submission of result.
 ![image](images/cars_result.jpg)
 
 ## Recent state-of-the-art results
@@ -79,14 +81,14 @@ Sat Jun 15 06:42:17 2019
 
 As mentioned by the [AI challenge](https://www.aiforsea.com/computer-vision), the project uses the [Cars Dataset](https://ai.stanford.edu/~jkrause/cars/car_dataset.html), which contains 16,185 images of 196 classes of cars. The data is split into 8,144 training images and 8,041 testing images, where each class has been split roughly in a 50-50 split.
 
-In addition, I have also created a docker, which can be built to start a server locally where you can input an image to get the class prediction.
+In addition, I have also [setup a docker](#setup-docker), which can be built to start a server locally where you can input an image to get the class prediction.
 
 To setup and run the project follow the steps below.
 
 #### Prerequisites
 
-- Any standard Linux. I used Debian GNU/Linux 9.9 (stretch). But, Ubuntu 16.04 or 18.04 should be fine too. Note that, [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation), that is being used in this project, currently supports Linux only, and requires PyTorch v1 and Python 3.6 or later.
-- Install [PyTorch](https://pytorch.org/get-started/locally/) and [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation) latest stable version as mentioned in Development platform above.
+- Any standard Linux distribution. I used Debian GNU/Linux 9.9 (stretch). But, Ubuntu 16.04 or 18.04 should be fine too. Note that, [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation), that is being used in this project, currently supports Linux only, and requires PyTorch v1 and Python 3.6 or later.
+- Install [PyTorch](https://pytorch.org/get-started/locally/) and [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation) latest stable version as mentioned in [Development platform](#development-platform) section above.
 
 #### Steps
 
@@ -114,7 +116,7 @@ Requirement already satisfied: scipy==1.3.0 in /usr/local/lib/python3.7/site-pac
 Requirement already satisfied: six==1.12.0 in /usr/local/lib/python3.7/site-packages (from -r requirements.txt (line 10)) (1.12.0)
 Requirement already satisfied: starlette==0.12.0 in /usr/local/lib/python3.7/site-packages (from -r requirements.txt (line 11)) (0.12.0)
 ```
-- Run the below script to get the data and organize the it into ImageNet folder architecture style, the train/valid split is specified in 'train_split = 0.8'. **Thanks to foamliu** for providing the preprocessing script on [this github repo](https://github.com/foamliu/Car-Recognition/blob/master/pre-process.py)
+- Run the below script to get the data and organize the it into ImageNet folder architecture style, the train/valid split is specified in 'train_split = 0.8' in [preprocess.py](preprocess.py). **Thanks to foamliu** for providing the preprocessing script on [this github repo](https://github.com/foamliu/Car-Recognition/blob/master/pre-process.py)
 ```bash
 $ sh prepare_data.sh
 ```
@@ -137,10 +139,10 @@ $ python inference.py [OPTION] <file_name>
 
 `file_name` is the absolute path to either one of (depending on OPTION):
 1. A .jpg image, if you want to predict class for one image using `predict-one` option.
-2. `cars_test_annos_withlabels.mat` file containing the test data annotations, if you want to just know the accuracy of the model using `with-accuracy` option. Note that, the `cars_test_annos_withlabels.mat` file would have already been saved under the root directory of this project if `prepare_dat.sh` script ran successfully. In case, it isn't there then you can download this file [here](http://imagenet.stanford.edu/internal/car196/cars_test_annos_withlabels.mat).
+2. `cars_test_annos_withlabels.mat` file containing the test data annotations, if you want to just know the accuracy of the model using `with-accuracy` option. Note that, the `cars_test_annos_withlabels.mat` file would have already been saved under the root directory of this project if `prepare_data.sh` script ran successfully. In case, it isn't there then you can download this file [here](http://imagenet.stanford.edu/internal/car196/cars_test_annos_withlabels.mat).
 3. A .txt file, which will be the output file, if you want to get predictions for all test data in test set, including the confidence score using `with-confidence` option.
 
-NOTE: `OPTION` is optional but `file_name` is mandatory argument. If you do not provide any option, the code will write the output to the `file_name` with only the class_id of the predictions for all the test data in the format that is acceptable at [Cars 196 Submission Site](http://imagenet.stanford.edu/internal/car196/submission/submission.php). Check the last example in the section below.
+NOTE: `OPTION` is optional but `file_name` is mandatory argument. If you do not provide any option, the code will write the output to the `file_name` with only the class_id of the predictions for all the test data in the format that is acceptable at [Cars 196 Submission Site](http://imagenet.stanford.edu/internal/car196/submission/submission.php). Check the last example in the [examples section](#some-examples) below.
 #### Some examples
 
 - This one below shows the output of prediction of one image. Output is ine the format <class_id, class_name, confidence>. 
@@ -201,9 +203,12 @@ And your output will look like this:
 
 ![image](images/cassify-url.jpg)
 
+Try with the Tesla image in `images` folder for fun!
+
 ## Citations and Acknowledgements
 
 - [One cycle learning paper](https://arxiv.org/pdf/1803.09820.pdf) by Leslie Smith.
+- [mixup: Beyond Empirical Risk Minimization by Hongyi Zhang et. al](https://arxiv.org/abs/1710.09412), I used this for experiments with ResNets to reduce sensitivity to adverserial examples. You can find the relevant notebook in `experiments` folder.
 - Current state-of-the-art results using ResNet101 on the same dataset: 
 [Deep CNNs With Spatially Weighted Pooling for Fine-Grained Car Recognition by Qichang Hu et. al](https://www.researchgate.net/publication/316027349_Deep_CNNs_With_Spatially_Weighted_Pooling_for_Fine-Grained_Car_Recognition)
 and
