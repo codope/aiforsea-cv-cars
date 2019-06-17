@@ -20,9 +20,9 @@ Table of contents
 <!--te-->
 ## Summary
 
-- Trained and tested with ResNet50, Resnet101, ResNet152. Different notebooks can be found in `experiments` folder. However, the solution that I intend to submit is in [cv-stanford-cars.ipynb](https://github.com/codope/aiforsea-cv-cars/blob/master/cv-stanford-cars.ipynb) notebook.
+- Trained and tested with ResNet50, Resnet101, ResNet152. Different notebooks can be found in `experiments` folder. However, the solution that I intend to submit is in [cv-stanford-cars.ipynb](cv-stanford-cars.ipynb) notebook and the model file is [`export-rn101_train_stage2-50e.pkl`](export-rn101_train_stage2-50e.pkl). It achieves 91.4% accuracy on test set provided by [Stanford](https://ai.stanford.edu/~jkrause/cars/car_dataset.html).
 - Ceteris paribus, a model with denser networks performed better. But, there is a trade-off between resources and accuracy. So, the goal of this project was to arrive at a good model (say > 90% accuracy, without overfitting) within a faster training time. Given more time and resources, we could definitely experiment and fine-tune more to improve accuracy.
-- With this goal in mind, I could come up with **90.7% on validation set and 91.4% on test set** by fine-tuning ResNet101. Specifically, I used a differential learning rate between `slice(1e-4,1e-3)` over 40 epochs, with a momentum of `Point(0.95, 0.85)`. The process of training and intuition behind tuning could be found in [cv-stanford-cars.ipynb](https://github.com/codope/aiforsea-cv-cars/blob/master/cv-stanford-cars.ipynb) notebook. With ResNet152, I was able to get to 91.8% accuracy with [mixup](https://arxiv.org/abs/1710.09412) but the model was overfitting. 
+- With this goal in mind, I could come up with **90.7% on validation set and 91.4% on test set** by fine-tuning ResNet101. Specifically, I used a differential learning rate between `slice(1e-4,1e-3)` over 40 epochs, with a momentum of `Point(0.95, 0.85)`. The process of training and intuition behind tuning could be found in [cv-stanford-cars.ipynb](cv-stanford-cars.ipynb) notebook. With ResNet152, I was able to get to 91.8% accuracy with [mixup](https://arxiv.org/abs/1710.09412) but the model was overfitting. 
 
 To learn about how to run and test, jump to [Usage](#usage) section below. Here's a screenshot of my submission of result.
 ![image](images/cars_result.jpg)
@@ -81,13 +81,13 @@ Sat Jun 15 06:42:17 2019
 
 As mentioned by the [AI challenge](https://www.aiforsea.com/computer-vision), the project uses the [Cars Dataset](https://ai.stanford.edu/~jkrause/cars/car_dataset.html), which contains 16,185 images of 196 classes of cars. The data is split into 8,144 training images and 8,041 testing images, where each class has been split roughly in a 50-50 split.
 
-In addition, I have also [setup a docker](#setup-docker), which can be built to start a server locally where you can input an image to get the class prediction.
+In addition, I have also [setup a docker](#setup-docker), which can be built to start a server locally where you can upload an image or give the image url to get the class prediction.
 
 To setup and run the project follow the steps below.
 
 #### Prerequisites
 
-- Any standard Linux distribution. I used Debian GNU/Linux 9.9 (stretch). But, Ubuntu 16.04 or 18.04 should be fine too. Note that, [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation), that is being used in this project, currently supports Linux only, and requires PyTorch v1 and Python 3.6 or later.
+- Any standard Linux distribution. I used Debian GNU/Linux 9.9 (stretch). But, Ubuntu 16.04 or 18.04 should be fine too. Note that, [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation), that is being used in this project, **currently supports Linux only**, and requires PyTorch v1 and Python 3.6 or later.
 - Install [PyTorch](https://pytorch.org/get-started/locally/) and [Fastai](https://github.com/fastai/fastai/blob/master/README.md#installation) latest stable version as mentioned in [Development platform](#development-platform) section above.
 
 #### Steps
@@ -116,7 +116,7 @@ Requirement already satisfied: scipy==1.3.0 in /usr/local/lib/python3.7/site-pac
 Requirement already satisfied: six==1.12.0 in /usr/local/lib/python3.7/site-packages (from -r requirements.txt (line 10)) (1.12.0)
 Requirement already satisfied: starlette==0.12.0 in /usr/local/lib/python3.7/site-packages (from -r requirements.txt (line 11)) (0.12.0)
 ```
-- Run the below script to get the data and organize the it into ImageNet folder architecture style, the train/valid split is specified in 'train_split = 0.8' in [preprocess.py](preprocess.py). **Thanks to foamliu** for providing the preprocessing script on [this github repo](https://github.com/foamliu/Car-Recognition/blob/master/pre-process.py)
+- Run the below script to get the data and organise it into ImageNet folder architecture style, the train/valid split is specified in 'train_split = 0.8' in [preprocess.py](preprocess.py). **Thanks to foamliu** for providing the preprocessing script on [this github repo](https://github.com/foamliu/Car-Recognition/blob/master/pre-process.py)
 ```bash
 $ sh prepare_data.sh
 ```
@@ -213,5 +213,5 @@ Try with the Tesla image in `images` folder for fun!
 [Deep CNNs With Spatially Weighted Pooling for Fine-Grained Car Recognition by Qichang Hu et. al](https://www.researchgate.net/publication/316027349_Deep_CNNs_With_Spatially_Weighted_Pooling_for_Fine-Grained_Car_Recognition)
 and
 [Weakly Supervised Data Augmentation Network for Fine-Grained Visual Classification by Tao Hu et. al](https://arxiv.org/abs/1901.09891)
-- [foamliu](https://github.com/foamliu/Car-Recognition) for the preprocessing script.
+- [foamliu](https://github.com/foamliu/Car-Recognition/blob/master/pre-process.py) for the preprocessing script.
 - [Fastai](https://www.fast.ai/) for democratising deep learning and `making neural nets uncool again`!
