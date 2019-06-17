@@ -210,6 +210,7 @@ Try with the Tesla image in `images` folder for fun!
 
 ## Citations and Acknowledgements
 
+- [3D Object Representations for Fine-Grained Categorization by Jonathan Krause et. al](https://ai.stanford.edu/~jkrause/cars/car_dataset.html) for the annotated data.
 - [One cycle learning paper](https://arxiv.org/pdf/1803.09820.pdf) by Leslie Smith.
 - [mixup: Beyond Empirical Risk Minimization by Hongyi Zhang et. al](https://arxiv.org/abs/1710.09412), I used this for experiments with ResNets to reduce sensitivity to adverserial examples. You can find the relevant notebook in `experiments` folder.
 - Current state-of-the-art results using ResNet101 on the same dataset: 
