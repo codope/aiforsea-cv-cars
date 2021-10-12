@@ -1,7 +1,7 @@
 fbpca==1.0
 imageio==2.4.1
 numpy==1.16.4
-opencv-python==4.1.0.25
+opencv-python==4.2.0.32
 pandas==0.24.2
 Pillow>=6.2.2
 python-dateutil==2.8.0
